@@ -1,23 +1,36 @@
-const heart = document.createElement('div');
-heart.innerHTML = "❤️";
-heart.style.position = 'fixed';
-heart.style.top = '-50px';
-heart.style.left = Math.random() * window.innerWidth + 'px';
-heart.style.fontSize = '24px';
-document.body.appendChild(heart);
+function crearCorazon() {
+  const heart = document.createElement("div");
+  heart.innerText = "❤️";
+  heart.style.position = "fixed";
+  heart.style.fontSize = Math.random() * 20 + 20 + "px";
+  heart.style.opacity = Math.random() * 0.5 + 0.3;
+  heart.style.left = Math.random() * window.innerWidth + "px";
+  heart.style.top = "-40px";
+  heart.style.pointerEvents = "none";
+  heart.style.animation = "caer 5s linear forwards";
+  heart.classList.add("corazon");
+  document.body.appendChild(heart);
 
-setInterval(() => {
-  const clone = heart.cloneNode(true);
-  clone.style.left = Math.random() * window.innerWidth + 'px';
-  document.body.appendChild(clone);
+  setTimeout(() => heart.remove(), 6000);
+}
 
-  let top = -50;
-  const fall = setInterval(() => {
-    top += 2;
-    clone.style.top = top + 'px';
-    if (top > window.innerHeight) {
-      clearInterval(fall);
-      clone.remove();
-    }
-  }, 30);
-}, 500);
+setInterval(crearCorazon, 300);
+
+const estiloAnimacion = document.createElement("style");
+estiloAnimacion.innerHTML = `
+@keyframes caer {
+  to {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.corazon {
+  position: fixed;
+  color: #ff4f87;
+  z-index: 1000;
+  animation: caer 5s linear forwards;
+}
+`;
+document.head.appendChild(estiloAnimacion);
+
